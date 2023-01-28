@@ -3,8 +3,8 @@ package com.tictactoe;
 import java.util.Scanner;
 
 public class ConsoleInterface {
-    static Scanner scanner = new Scanner(System.in);
-    static State state;
+    private static Scanner scanner = new Scanner(System.in);
+    private static State state;
 
     static private void pressEnterToContinue() {
         System.out.println("Press Enter key to continue...");
