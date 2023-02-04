@@ -9,7 +9,7 @@ public class Logic {
     static public boolean checkField(String[][] situation, Field field){
         if(checkBoarder(situation, field)){
             return !situation[field.y()][field.x()].equals("x") && (!situation[field.y()][field.x()].equals("o"));
-        } else {
+        } else { //czy else i if w ogóle jest potrzebny? może zrobić to samym returnem i warunkiem?
             return false;
         }
     }
