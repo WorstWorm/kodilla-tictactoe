@@ -3,109 +3,76 @@ package com.tictactoe;
 import java.util.Scanner;
 
 public class ConsoleInterface {
-    private static Scanner scanner = new Scanner(System.in);
+    private final static Scanner scanner = new Scanner(System.in);
     private static State state;
 
     static private void pressEnterToContinue() {
         System.out.println("Press Enter key to continue...");
-        try
-        {
+        try {
             System.in.read();
             scanner.nextLine();
         }
-        catch(Exception e)
-        {}
+        catch(Exception e) {
+            System.out.println("Error: " + e);
+        }
     }
 
     static public void gamePvP () {
         System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
-        Board.generateBoard(state.getMap());
+        Board.generateBoardInConsole(state.getMap());
         while (!state.isEnd()) {
-            Field choosenField;
-            boolean getOut = false;
-            do {
-                System.out.println("Make move: ");
-                int playerMove = scanner.nextInt();
-                choosenField = Logic.checkFieldByNr(state.getMap(), playerMove);
-                if (Logic.checkField(state.getMap(), choosenField)) {
-                    state.makeMove(choosenField);
-                    getOut = true;
-                } else {
-                    System.out.println("To pole nie jest dostępne");
-                    Board.generateBoard(state.getMap());
-                }
-            } while (!getOut);
-            if (Logic.checkSequence(state.getMap(), state.getActivePlayer(), choosenField, state.getLengthOfLine())) {
-                System.out.println("Gra wygrana przez " + state.getActivePlayer());
-                Board.generateBoard(state.getMap());
-                state.setEnd(true);
-                pressEnterToContinue();
-            } else if (!Logic.emptyField(state.getMap())) {
-                System.out.println("Remis");
-                state.setEnd(true);
-                pressEnterToContinue();
-            } else {
-                state.nextTurn();
-                System.out.println("Turn " + state.getTurn() + " - move: " + state.getActivePlayer());
-                Board.generateBoard(state.getMap());
-            }
+            makeMoveConsoleProcedure();
         }
     }
 
     static public void gamePvC () {
         System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
-        Board.generateBoard(state.getMap());
+        Board.generateBoardInConsole(state.getMap());
         while (!state.isEnd()) {
-            Field choosenField;
-            boolean getOut = false;
-            do {
-                System.out.println("Make move: ");
-                int playerMove = scanner.nextInt();
-                choosenField = Logic.checkFieldByNr(state.getMap(), playerMove);
-                if (Logic.checkField(state.getMap(), choosenField)) {
-                    state.makeMove(choosenField);
-                    getOut = true;
-                } else {
-                    System.out.println("To pole nie jest dostępne");
-                    Board.generateBoard(state.getMap());
-                }
-            } while (!getOut);
-            if (Logic.checkSequence(state.getMap(), state.getActivePlayer(), choosenField, state.getLengthOfLine())) {
-                System.out.println("Gra wygrana przez " + state.getActivePlayer());
-                state.setEnd(true);
-                pressEnterToContinue();
-            } else if (!Logic.emptyField(state.getMap())) {
-                System.out.println("Remis");
-                state.setEnd(true);
-                pressEnterToContinue();
-            } else {
-                state.nextTurn();
-                System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
-                Board.generateBoard(state.getMap());
-            }
-
-
-            choosenField = Logic.randomMove(state.getMap());
-            state.makeMove(choosenField);
-            if (Logic.checkSequence(state.getMap(), state.getActivePlayer(), choosenField, state.getLengthOfLine())) {
-                System.out.println("Gra wygrana przez " + state.getActivePlayer());
-                Board.generateBoard(state.getMap());
-                state.setEnd(true);
-                pressEnterToContinue();
-            } else if (!Logic.emptyField(state.getMap())) {
-                System.out.println("Remis");
-                state.setEnd(true);
-                pressEnterToContinue();
-            } else {
-                state.nextTurn();
-                System.out.println("Turn " + state.getTurn() + " - move: " + state.getActivePlayer());
-                Board.generateBoard(state.getMap());
+            makeMoveConsoleProcedure();
+            if(!state.isEnd()){
+                Field chosenField = Logic.randomMove(state.getMap());
+                state.makeMove(chosenField);
+                checkEndConsoleProcedure(chosenField);
             }
         }
     }
 
-    static public void gamePvCx () {
+    static private void makeMoveConsoleProcedure() {
+        Field chosenField;
+        boolean getOut = false;
+        do {
+            System.out.println("Make move: ");
+            int playerMove = scanner.nextInt();
+            chosenField = Logic.checkFieldByNr(state.getMap(), playerMove);
+            if (Logic.checkField(state.getMap(), chosenField)) {
+                state.makeMove(chosenField);
+                getOut = true;
+            } else {
+                System.out.println("This field is not available");
+                Board.generateBoardInConsole(state.getMap());
+            }
+        } while (!getOut);
+        checkEndConsoleProcedure(chosenField);
     }
+
+    static private void checkEndConsoleProcedure(Field chosenField) {
+        if (Logic.checkSequence(state.getMap(), state.getActivePlayer(), chosenField, state.getLengthOfLine())) {
+            System.out.println(state.getActivePlayer() + " won");
+            Board.generateBoardInConsole(state.getMap());
+            state.setEnd(true);
+            pressEnterToContinue();
+        } else if (!Logic.emptyField(state.getMap())) {
+            System.out.println("Draw");
+            state.setEnd(true);
+            pressEnterToContinue();
+        } else {
+            state.nextTurn();
+            System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
+            Board.generateBoardInConsole(state.getMap());
+        }
+    }
+
 
     static public void run() {
         System.out.println(
@@ -121,7 +88,6 @@ public class ConsoleInterface {
                     "select an option:\n" +
                     "0 - new game (p v p)\n" +
                     "1 - new game (p v c - easy)\n" +
-                    "2 - new game (p v c - hard)\n" +
                     "3 - quit");
 
             int gameMode;
@@ -148,8 +114,6 @@ public class ConsoleInterface {
                 gamePvP();
             } else if (gameMode == 1) {
                 gamePvC();
-            } else {
-                gamePvCx();
             }
         }
     }

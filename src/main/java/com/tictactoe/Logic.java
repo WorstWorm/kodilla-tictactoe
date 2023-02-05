@@ -6,18 +6,18 @@ import java.util.Random;
 
 public class Logic {
 
-    static public boolean checkField(String[][] situation, Field field){
-        if(checkBoarder(situation, field)){
+    static public boolean checkField(String[][] situation, Field field) {
+        if(checkBoarder(situation, field)) {
             return !situation[field.y()][field.x()].equals("x") && (!situation[field.y()][field.x()].equals("o"));
-        } else { //czy else i if w ogóle jest potrzebny? może zrobić to samym returnem i warunkiem?
+        } else {
             return false;
         }
     }
 
-    static public Field checkFieldByNr(String[][] situation, int input){
-        for(int i=0; i< situation.length; i++){
-            for(int j=0; j<situation[i].length; j++){
-                if(situation[i][j].equals(Integer.toString(input)) || situation[i][j].equals("0"+ input)){
+    static public Field checkFieldByNr(String[][] situation, int input) {
+        for(int i=0; i< situation.length; i++) {
+            for(int j=0; j<situation[i].length; j++) {
+                if(situation[i][j].equals(Integer.toString(input)) || situation[i][j].equals("0"+ input)) {
                     return new Field(i,j);
                 }
             }
@@ -25,15 +25,15 @@ public class Logic {
         return new Field(-1,-1);
     }
 
-    static public boolean checkSequence(String[][] situation, String player, Field field, int length){
+    static public boolean checkSequence(String[][] situation, String player, Field field, int length) {
 
         int positionX = field.x();
         int positionY = field.y();
 
         //column check
         HashSet<Field> line = new HashSet<>();
-        for(int i=0; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY+i, positionX))){
+        for(int i=0; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY+i, positionX))) {
                 if (situation[positionY + i][positionX].equals(player)) {
                     line.add(new Field(positionY + i, positionX));
                 } else {
@@ -42,8 +42,8 @@ public class Logic {
             }
         }
 
-        for(int i=1; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY-i, positionX))){
+        for(int i=1; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY-i, positionX))) {
                 if (situation[positionY - i][positionX].equals(player)) {
                     line.add(new Field(positionY - i, positionX));
                 } else {
@@ -52,14 +52,14 @@ public class Logic {
             }
         }
 
-        if(line.toArray().length>=length){
+        if(line.toArray().length >= length) {
             return true;
         }
 
         //row check
         line = new HashSet<>();
-        for(int i=0; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY, positionX+i))){
+        for(int i=0; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY, positionX+i))) {
                 if (situation[positionY][positionX+i].equals(player)) {
                     line.add(new Field(positionY, positionX+i));
                 } else {
@@ -68,8 +68,8 @@ public class Logic {
             }
         }
 
-        for(int i=1; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY, positionX-i))){
+        for(int i=1; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY, positionX-i))) {
                 if (situation[positionY][positionX-i].equals(player)) {
                     line.add(new Field(positionY, positionX-i));
                 } else {
@@ -78,14 +78,14 @@ public class Logic {
             }
         }
 
-        if(line.toArray().length>=length){
+        if(line.toArray().length >= length) {
             return true;
         }
 
         //diagonal left-right check
         line = new HashSet<>();
-        for(int i=0; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY+i, positionX+i))){
+        for(int i=0; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY+i, positionX+i))) {
                 if (situation[positionY+i][positionX+i].equals(player)) {
                     line.add(new Field(positionY+i, positionX+i));
                 } else {
@@ -94,8 +94,8 @@ public class Logic {
             }
         }
 
-        for(int i=1; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY-i, positionX-i))){
+        for(int i=1; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY-i, positionX-i))) {
                 if (situation[positionY-i][positionX-i].equals(player)) {
                     line.add(new Field(positionY-i, positionX-i));
                 } else {
@@ -104,15 +104,15 @@ public class Logic {
             }
         }
 
-        if(line.toArray().length>=length){
+        if(line.toArray().length >= length){
             return true;
         }
 
 
         //diagonal right-left check
         line = new HashSet<>();
-        for(int i=0; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY+i, positionX-i))){
+        for(int i=0; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY+i, positionX-i))) {
                 if (situation[positionY+i][positionX-i].equals(player)) {
                     line.add(new Field(positionY+i, positionX-i));
                 } else {
@@ -121,8 +121,8 @@ public class Logic {
             }
         }
 
-        for(int i=1; i<length; i++){
-            if(checkBoarder(situation, new Field(positionY-i, positionX+i))){
+        for(int i=1; i<length; i++) {
+            if(checkBoarder(situation, new Field(positionY-i, positionX+i))) {
                 if (situation[positionY-i][positionX+i].equals(player)) {
                     line.add(new Field(positionY-i, positionX+i));
                 } else {
@@ -131,13 +131,10 @@ public class Logic {
             }
         }
 
-        if(line.toArray().length>=length){
-            return true;
-        }
-        return false;
+        return line.toArray().length >= length;
     }
 
-    static public boolean checkBoarder(String[][] situation, Field field){
+    static public boolean checkBoarder(String[][] situation, Field field) {
         try{
             String temp = situation[field.y()][field.x()];
             return true;
@@ -146,24 +143,19 @@ public class Logic {
         }
     }
 
-    static public boolean emptyField(String[][] situation){
-        ArrayList<Field> fields = new ArrayList<>();
-        for(int i=0; i<situation.length; i++) {
-            for (int j = 0; j < situation[i].length; j++) {
-                if (!situation[i][j].equals("x") && !situation[i][j].equals("o")) {
-                    fields.add(new Field(i, j));
-                }
-            }
-        }
-        if (fields.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+    static public boolean emptyField(String[][] situation) {
+        ArrayList<Field> fields = buildFieldArray(situation);
+        return !fields.isEmpty();
     }
 
-    static public Field randomMove(String[][] situation){
+    static public Field randomMove(String[][] situation) {
         Random random = new Random();
+        ArrayList<Field> fields = buildFieldArray(situation);
+        int select = random.nextInt(0, fields.size());
+        return fields.get(select);
+    }
+
+    private static ArrayList<Field> buildFieldArray(String[][] situation) {
         ArrayList<Field> fields = new ArrayList<>();
         for(int i=0; i<situation.length; i++){
             for(int j=0; j<situation[i].length; j++){
@@ -172,7 +164,6 @@ public class Logic {
                 }
             }
         }
-        int select=random.nextInt(0, fields.size());
-        return fields.get(select);
+        return fields;
     }
 }
