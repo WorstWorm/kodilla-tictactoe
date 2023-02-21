@@ -1,6 +1,6 @@
 package com.tictactoe;
 
-public class State {
+public class State extends Prototype<State> {
     private String[][] map;
     private int size;
     private int lengthOfLine;
@@ -38,7 +38,7 @@ public class State {
     }
 
     public void makeMove(Field field) {
-        if(Logic.checkField(this.getMap(), field)) {
+        if(BoardHandler.isFieldOccupied(this.getMap(), field)) {
             map[field.y()][field.x()] = activePlayer;
         }
     }
@@ -88,4 +88,19 @@ public class State {
     public boolean getComputerPlayer() {
         return computerPlayer;
     }
+
+    public State deepCopy() throws CloneNotSupportedException {
+        State clonedState = super.clone();
+        clonedState.map = new String[size][size];
+        for(int i=0; i<size; i++) {
+            for(int j=0; j<size; j++) {
+                clonedState.map[i][j] = map[i][j];
+            }
+        }
+        clonedState.turn = turn;
+        clonedState.changeActivePlayer();
+        clonedState.end = end;
+        return clonedState;
+    }
+
 }

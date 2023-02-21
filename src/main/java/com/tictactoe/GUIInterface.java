@@ -12,6 +12,7 @@ import static com.tictactoe.UIConstants.*;
 
 public class GUIInterface extends Application {
     private State state = new State(3,3, false);
+    private MovementMemory memory  = new MovementMemory();
     Button[][] buttons = new Button[3][3];
 
     @Override
@@ -24,12 +25,16 @@ public class GUIInterface extends Application {
         Popup popup = new Popup();
         BorderPane root = new BorderPane();
         int sizeOfTheBoard = state.getSize() * BUTTON_SIZE;
-        Scene scene = new Scene(root, sizeOfTheBoard, sizeOfTheBoard+26);
+        Scene scene = new Scene(root, sizeOfTheBoard, sizeOfTheBoard+45);
         GridPane grid = new GridPane();
         MenuBar menuBar = new MenuBar();
+        BorderPane statusBar = new BorderPane();
+
         root.setTop(menuBar);
+        root.setBottom(statusBar);
 
         Menu fileMenu = new Menu("File");
+        Menu editMenu = new Menu("Edit");
 
         MenuItem newGame3ItemPvP = new MenuItem("New Game 3x3 - 3 in row against another player");
         MenuItem newGame10ItemPvP = new MenuItem("New Game 10x10 - 5 in row against another player");
@@ -37,11 +42,18 @@ public class GUIInterface extends Application {
         MenuItem newGame10ItemPvC = new MenuItem("New Game 10x10 - 5 in row against computer");
         MenuItem exitItem = new MenuItem("Exit");
 
+        MenuItem undo = new MenuItem("Undo");
+
+        Label statusLabel = new Label();
+        statusLabel.setText("turn " + (state.getTurn() + 1) + " player: " + state.getActivePlayer());
+        statusBar.setBottom(statusLabel);
+
         Label label = new Label();
         label.setStyle(POPUP_STYLE);
         label.setFont(Font.font(POPUP_FONT_SIZE));
 
         exitItem.setOnAction(event -> stage.close());
+
         newGame3ItemPvP.setOnAction(event -> {
             popup.hide();
             newGame(3,3, false);
@@ -66,8 +78,36 @@ public class GUIInterface extends Application {
             stage.close();
         });
 
+        undo.setOnAction(event -> {
+            popup.hide();
+            state = memory.returnFromMemory();
+            if(state.getComputerPlayer()){
+                state = memory.returnFromMemory();
+            }
+            for(int i=0; i<state.getMap().length; i++) {
+                for (int j=0; j<state.getMap()[i].length; j++) {
+                    if(state.getMap()[i][j].equals("x")) {
+                        buttons[i][j].setText("x");
+                        buttons[i][j].setDisable(true);
+                    }
+                    else if (state.getMap()[i][j].equals("o")) {
+                        buttons[i][j].setText("o");
+                        buttons[i][j].setDisable(true);
+                    }
+                    else {
+                        buttons[i][j].setText(BoardHandler.getNrByField(state, new Field(j,i)));
+                        buttons[i][j].setDisable(false);
+                        buttons[i][j].setFont(Font.font(UNMARKED_FIELD_FONT_SIZE));
+                    }
+                }
+            }
+            statusLabel.setText("turn " + (state.getTurn()+1) + " player: " + state.getActivePlayer());
+        });
+
         fileMenu.getItems().addAll(newGame3ItemPvP, newGame10ItemPvP, newGame3ItemPvC, newGame10ItemPvC, exitItem);
+        editMenu.getItems().add(undo);
         menuBar.getMenus().add(fileMenu);
+        menuBar.getMenus().add(editMenu);
 
         for(int y=0; y<state.getSize(); y++) {
             {
@@ -78,12 +118,17 @@ public class GUIInterface extends Application {
                     int finalY = y;
                     int finalX = x;
                     button.setOnAction(event -> {
-                        moveGUIProcedure(buttons[finalY][finalX], finalY, finalX, label, popup, stage);
+                        try {
+                            moveGUIProcedure(buttons[finalY][finalX], finalY, finalX, label, popup, stage);
                         if(state.getComputerPlayer()){
-                            Field computerMove = Logic.randomMove(state.getMap());
+                            Field computerMove = ComputerMoveGenerator.randomMove(state.getMap());
                             moveGUIProcedure(buttons[computerMove.y()][computerMove.x()],
                                     computerMove.y(), computerMove.x(), label, popup, stage);
                         }
+                        } catch (CloneNotSupportedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        statusLabel.setText("turn " + (state.getTurn()+1) + " player: " + state.getActivePlayer());
                     });
                     buttons[y][x] = button;
                     grid.add(button, y, x);
@@ -102,13 +147,14 @@ public class GUIInterface extends Application {
         startGame(new Stage());
     }
 
-    private void moveGUIProcedure(Button button, int y, int x, Label label, Popup popup, Stage stage) {
+    private void moveGUIProcedure(Button button, int y, int x, Label label, Popup popup, Stage stage) throws CloneNotSupportedException {
+        memory.addToMemory(state);
         button.setDisable(true);
         state.makeMove(new Field(y, x));
         button.setFont(Font.font(MARKED_FIELD_FONT_SIZE));
         button.setText(state.getActivePlayer());
 
-        if(Logic.checkSequence(state.getMap(), state.getActivePlayer(), new Field(y, x), state.getLengthOfLine())) {
+        if(Logic.checkSequence(state, state.getActivePlayer())) {
             label.setText(" " + state.getActivePlayer() + " won ");
             popup.getContent().add(label);
             popup.show(stage);
@@ -118,14 +164,14 @@ public class GUIInterface extends Application {
                     buttons[i][j].setDisable(true);
                 }
             }
-        } else if (!Logic.emptyField(state.getMap())) {
+        } else if (!BoardHandler.doesEmptyFieldExists(state.getMap())) {
             label.setText(" draw ");
             popup.getContent().add(label);
             popup.show(stage);
             state.setEnd(true);
         }
+
         state.nextTurn();
-        state.changeActivePlayer();
     }
 
     public static void main(String[] args) {

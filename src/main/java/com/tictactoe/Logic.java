@@ -1,169 +1,169 @@
 package com.tictactoe;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
 
 public class Logic {
 
-    static public boolean checkField(String[][] situation, Field field) {
-        if(checkBoarder(situation, field)) {
-            return !situation[field.y()][field.x()].equals("x") && (!situation[field.y()][field.x()].equals("o"));
-        } else {
-            return false;
+    private static boolean columnCheck(State state, String player) {
+        int length = state.getLengthOfLine();
+        String[][] situation = state.getMap();
+
+        for (int positionY = 0; positionY < state.getSize(); positionY++) {
+            for (int positionX = 0; positionX < state.getSize(); positionX++) {
+                HashSet<Field> line = new HashSet<>();
+                for (int i = 0; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY + i, positionX))) {
+                        if (situation[positionY + i][positionX].equals(player)) {
+                            line.add(new Field(positionY + i, positionX));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 1; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY - i, positionX))) {
+                        if (situation[positionY - i][positionX].equals(player)) {
+                            line.add(new Field(positionY - i, positionX));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                if (line.toArray().length >= length) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
-    static public Field checkFieldByNr(String[][] situation, int input) {
-        for(int i=0; i< situation.length; i++) {
-            for(int j=0; j<situation[i].length; j++) {
-                if(situation[i][j].equals(Integer.toString(input)) || situation[i][j].equals("0"+ input)) {
-                    return new Field(i,j);
+    private static boolean rowCheck(State state, String player) {
+        int length = state.getLengthOfLine();
+        String[][] situation = state.getMap();
+
+        for (int positionY = 0; positionY < state.getSize(); positionY++) {
+            for (int positionX = 0; positionX < state.getSize(); positionX++) {
+                HashSet<Field> line = new HashSet<>();
+
+                for (int i = 0; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY, positionX + i))) {
+                        if (situation[positionY][positionX + i].equals(player)) {
+                            line.add(new Field(positionY, positionX + i));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 1; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY, positionX - i))) {
+                        if (situation[positionY][positionX - i].equals(player)) {
+                            line.add(new Field(positionY, positionX - i));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                if (line.toArray().length >= length) {
+                    return true;
                 }
             }
         }
-        return new Field(-1,-1);
+        return false;
     }
 
-    static public boolean checkSequence(String[][] situation, String player, Field field, int length) {
+    private static boolean diagonalLRCheck(State state, String player) {
+        int length = state.getLengthOfLine();
+        String[][] situation = state.getMap();
 
-        int positionX = field.x();
-        int positionY = field.y();
+        for (int positionY = 0; positionY < state.getSize(); positionY++) {
+            for (int positionX = 0; positionX < state.getSize(); positionX++) {
+                HashSet<Field> line = new HashSet<>();
+                for (int i = 0; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY + i, positionX + i))) {
+                        if (situation[positionY + i][positionX + i].equals(player)) {
+                            line.add(new Field(positionY + i, positionX + i));
+                        } else {
+                            break;
+                        }
+                    }
+                }
 
-        //column check
-        HashSet<Field> line = new HashSet<>();
-        for(int i=0; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY+i, positionX))) {
-                if (situation[positionY + i][positionX].equals(player)) {
-                    line.add(new Field(positionY + i, positionX));
-                } else {
-                    break;
+                for (int i = 1; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY - i, positionX - i))) {
+                        if (situation[positionY - i][positionX - i].equals(player)) {
+                            line.add(new Field(positionY - i, positionX - i));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                if (line.toArray().length >= length) {
+                    return true;
                 }
             }
-        }
+        } return false;
+    }
 
-        for(int i=1; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY-i, positionX))) {
-                if (situation[positionY - i][positionX].equals(player)) {
-                    line.add(new Field(positionY - i, positionX));
-                } else {
-                    break;
+    private static boolean diagonalRLCheck(State state, String player) {
+        int length = state.getLengthOfLine();
+        String[][] situation = state.getMap();
+
+        for (int positionY = 0; positionY < state.getSize(); positionY++) {
+            for (int positionX = 0; positionX < state.getSize(); positionX++) {
+
+                HashSet<Field> line = new HashSet<>();
+                for (int i = 0; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY + i, positionX - i))) {
+                        if (situation[positionY + i][positionX - i].equals(player)) {
+                            line.add(new Field(positionY + i, positionX - i));
+                        } else {
+                            break;
+                        }
+                    }
                 }
-            }
-        }
 
-        if(line.toArray().length >= length) {
+                for (int i = 1; i < length; i++) {
+                    if (BoardHandler.isItOnBoardRange(situation, new Field(positionY - i, positionX + i))) {
+                        if (situation[positionY - i][positionX + i].equals(player)) {
+                            line.add(new Field(positionY - i, positionX + i));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                if (line.toArray().length >= length) {
+                    return true;
+                }
+
+            }
+        } return false;
+    }
+
+
+    public static boolean checkSequence(State state, String player) {
+
+        if (columnCheck(state, player)) {
             return true;
         }
 
-        //row check
-        line = new HashSet<>();
-        for(int i=0; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY, positionX+i))) {
-                if (situation[positionY][positionX+i].equals(player)) {
-                    line.add(new Field(positionY, positionX+i));
-                } else {
-                    break;
-                }
-            }
-        }
-
-        for(int i=1; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY, positionX-i))) {
-                if (situation[positionY][positionX-i].equals(player)) {
-                    line.add(new Field(positionY, positionX-i));
-                } else {
-                    break;
-                }
-            }
-        }
-
-        if(line.toArray().length >= length) {
+        if (rowCheck(state, player)) {
             return true;
         }
 
-        //diagonal left-right check
-        line = new HashSet<>();
-        for(int i=0; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY+i, positionX+i))) {
-                if (situation[positionY+i][positionX+i].equals(player)) {
-                    line.add(new Field(positionY+i, positionX+i));
-                } else {
-                    break;
-                }
-            }
-        }
-
-        for(int i=1; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY-i, positionX-i))) {
-                if (situation[positionY-i][positionX-i].equals(player)) {
-                    line.add(new Field(positionY-i, positionX-i));
-                } else {
-                    break;
-                }
-            }
-        }
-
-        if(line.toArray().length >= length){
+        if (diagonalLRCheck(state, player)) {
             return true;
         }
 
-
-        //diagonal right-left check
-        line = new HashSet<>();
-        for(int i=0; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY+i, positionX-i))) {
-                if (situation[positionY+i][positionX-i].equals(player)) {
-                    line.add(new Field(positionY+i, positionX-i));
-                } else {
-                    break;
-                }
-            }
-        }
-
-        for(int i=1; i<length; i++) {
-            if(checkBoarder(situation, new Field(positionY-i, positionX+i))) {
-                if (situation[positionY-i][positionX+i].equals(player)) {
-                    line.add(new Field(positionY-i, positionX+i));
-                } else {
-                    break;
-                }
-            }
-        }
-
-        return line.toArray().length >= length;
-    }
-
-    static public boolean checkBoarder(String[][] situation, Field field) {
-        try{
-            String temp = situation[field.y()][field.x()];
+        if (diagonalRLCheck(state, player)) {
             return true;
-        } catch(ArrayIndexOutOfBoundsException e) {
-            return false;
         }
-    }
 
-    static public boolean emptyField(String[][] situation) {
-        ArrayList<Field> fields = buildFieldArray(situation);
-        return !fields.isEmpty();
-    }
-
-    static public Field randomMove(String[][] situation) {
-        Random random = new Random();
-        ArrayList<Field> fields = buildFieldArray(situation);
-        int select = random.nextInt(0, fields.size());
-        return fields.get(select);
-    }
-
-    private static ArrayList<Field> buildFieldArray(String[][] situation) {
-        ArrayList<Field> fields = new ArrayList<>();
-        for(int i=0; i<situation.length; i++){
-            for(int j=0; j<situation[i].length; j++){
-                if(!situation[i][j].equals("x") && !situation[i][j].equals("o")){
-                    fields.add(new Field(i,j));
-                }
-            }
-        }
-        return fields;
+        return false;
     }
 }

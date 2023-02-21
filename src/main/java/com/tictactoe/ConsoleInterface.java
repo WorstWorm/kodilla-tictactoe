@@ -6,7 +6,7 @@ public class ConsoleInterface {
     private final static Scanner scanner = new Scanner(System.in);
     private static State state;
 
-    static private void pressEnterToContinue() {
+    private static void pressEnterToContinue() {
         System.out.println("Press Enter key to continue...");
         try {
             System.in.read();
@@ -17,64 +17,64 @@ public class ConsoleInterface {
         }
     }
 
-    static public void gamePvP () {
-        System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
-        Board.generateBoardInConsole(state.getMap());
+    private static void gamePvP () {
+        System.out.println("Turn " + (state.getTurn() + 1) + " - move: " + state.getActivePlayer());
+        ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
         while (!state.isEnd()) {
             makeMoveConsoleProcedure();
         }
     }
 
-    static public void gamePvC () {
-        System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
-        Board.generateBoardInConsole(state.getMap());
+    private static void gamePvC () {
+        System.out.println("Turn " + (state.getTurn() + 1) + " - move: " + state.getActivePlayer());
+        ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
         while (!state.isEnd()) {
             makeMoveConsoleProcedure();
             if(!state.isEnd()){
-                Field chosenField = Logic.randomMove(state.getMap());
+                Field chosenField = ComputerMoveGenerator.randomMove(state.getMap());
                 state.makeMove(chosenField);
                 checkEndConsoleProcedure(chosenField);
             }
         }
     }
 
-    static private void makeMoveConsoleProcedure() {
+    private static void makeMoveConsoleProcedure() {
         Field chosenField;
         boolean getOut = false;
         do {
             System.out.println("Make move: ");
             int playerMove = scanner.nextInt();
-            chosenField = Logic.checkFieldByNr(state.getMap(), playerMove);
-            if (Logic.checkField(state.getMap(), chosenField)) {
+            chosenField = BoardHandler.getFieldByNr(state.getMap(), playerMove);
+            if (BoardHandler.isFieldOccupied(state.getMap(), chosenField)) {
                 state.makeMove(chosenField);
                 getOut = true;
             } else {
                 System.out.println("This field is not available");
-                Board.generateBoardInConsole(state.getMap());
+                ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
             }
         } while (!getOut);
         checkEndConsoleProcedure(chosenField);
     }
 
-    static private void checkEndConsoleProcedure(Field chosenField) {
-        if (Logic.checkSequence(state.getMap(), state.getActivePlayer(), chosenField, state.getLengthOfLine())) {
+    private static void checkEndConsoleProcedure(Field chosenField) {
+        if (Logic.checkSequence(state, state.getActivePlayer())) {
             System.out.println(state.getActivePlayer() + " won");
-            Board.generateBoardInConsole(state.getMap());
+            ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
             state.setEnd(true);
             pressEnterToContinue();
-        } else if (!Logic.emptyField(state.getMap())) {
+        } else if (!BoardHandler.doesEmptyFieldExists(state.getMap())) {
             System.out.println("Draw");
             state.setEnd(true);
             pressEnterToContinue();
         } else {
             state.nextTurn();
-            System.out.println("Turn " + state.getTurn() + 1 + " - move: " + state.getActivePlayer());
-            Board.generateBoardInConsole(state.getMap());
+            System.out.println("Turn " + (state.getTurn() + 1) + " - move: " + state.getActivePlayer());
+            ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
         }
     }
 
 
-    static public void run() {
+    public static void run() {
         System.out.println(
             "  _____ ___ ____   _____  _    ____   _____ ___  _____ \n" +
             " |_   _|_ _/ ___| |_   _|/ \\  / ___| |_   _/ _ \\| ____|\n" +

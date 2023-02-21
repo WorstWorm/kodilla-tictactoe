@@ -1,7 +1,7 @@
 package com.tictactoe;
 
-public class Board {
-    static public void generateBoardInConsole(String[][] situation) {
+public class ConsoleBoardGenerator {
+    public static void generateBoardInConsole(String[][] situation) {
         String greatestNumber = situation[situation.length-1][situation.length-1];
         int leadingZeros = greatestNumber.length();
         for(int i=0; i<situation.length; i++) {
