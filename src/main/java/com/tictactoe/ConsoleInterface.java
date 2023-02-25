@@ -1,5 +1,7 @@
 package com.tictactoe;
 
+import com.tictactoe.ai.ComputerMoveGenerator;
+
 import java.util.Scanner;
 
 public class ConsoleInterface {
@@ -31,9 +33,9 @@ public class ConsoleInterface {
         while (!state.isEnd()) {
             makeMoveConsoleProcedure();
             if(!state.isEnd()){
-                Field chosenField = ComputerMoveGenerator.randomMove(state.getMap());
+                Field chosenField = ComputerMoveGenerator.generateMove(state);
                 state.makeMove(chosenField);
-                checkEndConsoleProcedure(chosenField);
+                checkEndConsoleProcedure();
             }
         }
     }
@@ -53,11 +55,11 @@ public class ConsoleInterface {
                 ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
             }
         } while (!getOut);
-        checkEndConsoleProcedure(chosenField);
+        checkEndConsoleProcedure();
     }
 
-    private static void checkEndConsoleProcedure(Field chosenField) {
-        if (Logic.checkSequence(state, state.getActivePlayer())) {
+    private static void checkEndConsoleProcedure() {
+        if (Logic.checkSequence(state)) {
             System.out.println(state.getActivePlayer() + " won");
             ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
             state.setEnd(true);

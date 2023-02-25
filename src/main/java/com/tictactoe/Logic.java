@@ -4,8 +4,9 @@ import java.util.HashSet;
 
 public class Logic {
 
-    private static boolean columnCheck(State state, String player) {
+    private static boolean columnCheck(State state) {
         int length = state.getLengthOfLine();
+        String player = state.getActivePlayer();
         String[][] situation = state.getMap();
 
         for (int positionY = 0; positionY < state.getSize(); positionY++) {
@@ -39,8 +40,9 @@ public class Logic {
         return false;
     }
 
-    private static boolean rowCheck(State state, String player) {
+    private static boolean rowCheck(State state) {
         int length = state.getLengthOfLine();
+        String player = state.getActivePlayer();
         String[][] situation = state.getMap();
 
         for (int positionY = 0; positionY < state.getSize(); positionY++) {
@@ -75,8 +77,9 @@ public class Logic {
         return false;
     }
 
-    private static boolean diagonalLRCheck(State state, String player) {
+    private static boolean diagonalLRCheck(State state) {
         int length = state.getLengthOfLine();
+        String player = state.getActivePlayer();
         String[][] situation = state.getMap();
 
         for (int positionY = 0; positionY < state.getSize(); positionY++) {
@@ -109,8 +112,9 @@ public class Logic {
         } return false;
     }
 
-    private static boolean diagonalRLCheck(State state, String player) {
+    private static boolean diagonalRLCheck(State state) {
         int length = state.getLengthOfLine();
+        String player = state.getActivePlayer();
         String[][] situation = state.getMap();
 
         for (int positionY = 0; positionY < state.getSize(); positionY++) {
@@ -146,21 +150,21 @@ public class Logic {
     }
 
 
-    public static boolean checkSequence(State state, String player) {
+    public static boolean checkSequence(State state) {
 
-        if (columnCheck(state, player)) {
+        if (columnCheck(state)) {
             return true;
         }
 
-        if (rowCheck(state, player)) {
+        if (rowCheck(state)) {
             return true;
         }
 
-        if (diagonalLRCheck(state, player)) {
+        if (diagonalLRCheck(state)) {
             return true;
         }
 
-        if (diagonalRLCheck(state, player)) {
+        if (diagonalRLCheck(state)) {
             return true;
         }
 

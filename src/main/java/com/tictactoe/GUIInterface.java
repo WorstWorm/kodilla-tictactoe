@@ -1,5 +1,6 @@
 package com.tictactoe;
 
+import com.tictactoe.ai.ComputerMoveGenerator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -121,7 +122,7 @@ public class GUIInterface extends Application {
                         try {
                             moveGUIProcedure(buttons[finalY][finalX], finalY, finalX, label, popup, stage);
                         if(state.getComputerPlayer()){
-                            Field computerMove = ComputerMoveGenerator.randomMove(state.getMap());
+                            Field computerMove = ComputerMoveGenerator.generateMove(state);
                             moveGUIProcedure(buttons[computerMove.y()][computerMove.x()],
                                     computerMove.y(), computerMove.x(), label, popup, stage);
                         }
@@ -154,7 +155,7 @@ public class GUIInterface extends Application {
         button.setFont(Font.font(MARKED_FIELD_FONT_SIZE));
         button.setText(state.getActivePlayer());
 
-        if(Logic.checkSequence(state, state.getActivePlayer())) {
+        if(Logic.checkSequence(state)) {
             label.setText(" " + state.getActivePlayer() + " won ");
             popup.getContent().add(label);
             popup.show(stage);
