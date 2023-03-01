@@ -1,6 +1,7 @@
 package com.tictactoe;
 
 import com.tictactoe.ai.ComputerMoveGenerator;
+import com.tictactoe.ai.MoveGenerator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,12 +10,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import static com.tictactoe.UIConstants.*;
+import static com.tictactoe.GUIConstants.*;
 
-public class GUIInterface extends Application {
+public class GraphicalUI extends Application {
     private State state = new State(3,3, false);
     private MovementMemory memory  = new MovementMemory();
     Button[][] buttons = new Button[3][3];
+    MoveGenerator moveGenerator = new ComputerMoveGenerator();
 
     @Override
     public void start(Stage primaryStage) {
@@ -121,8 +123,8 @@ public class GUIInterface extends Application {
                     button.setOnAction(event -> {
                         try {
                             moveGUIProcedure(buttons[finalY][finalX], finalY, finalX, label, popup, stage);
-                        if(state.getComputerPlayer()){
-                            Field computerMove = ComputerMoveGenerator.generateMove(state);
+                        if(state.getComputerPlayer() && !state.isEnd()){
+                            Field computerMove = moveGenerator.generateNextMove(state);
                             moveGUIProcedure(buttons[computerMove.y()][computerMove.x()],
                                     computerMove.y(), computerMove.x(), label, popup, stage);
                         }

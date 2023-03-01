@@ -1,10 +1,11 @@
 package com.tictactoe;
 
 import com.tictactoe.ai.ComputerMoveGenerator;
+import com.tictactoe.ai.MoveGenerator;
 
 import java.util.Scanner;
 
-public class ConsoleInterface {
+public class ConsoleUI {
     private final static Scanner scanner = new Scanner(System.in);
     private static State state;
 
@@ -28,12 +29,13 @@ public class ConsoleInterface {
     }
 
     private static void gamePvC () {
+        MoveGenerator moveGenerator = new ComputerMoveGenerator();
         System.out.println("Turn " + (state.getTurn() + 1) + " - move: " + state.getActivePlayer());
         ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
         while (!state.isEnd()) {
             makeMoveConsoleProcedure();
             if(!state.isEnd()){
-                Field chosenField = ComputerMoveGenerator.generateMove(state);
+                Field chosenField = moveGenerator.generateNextMove(state);
                 state.makeMove(chosenField);
                 checkEndConsoleProcedure();
             }
@@ -47,7 +49,7 @@ public class ConsoleInterface {
             System.out.println("Make move: ");
             int playerMove = scanner.nextInt();
             chosenField = BoardHandler.getFieldByNr(state.getMap(), playerMove);
-            if (BoardHandler.isFieldOccupied(state.getMap(), chosenField)) {
+            if (BoardHandler.isFieldEmpty(state.getMap(), chosenField)) {
                 state.makeMove(chosenField);
                 getOut = true;
             } else {

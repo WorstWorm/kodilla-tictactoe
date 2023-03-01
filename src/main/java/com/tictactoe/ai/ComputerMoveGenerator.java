@@ -7,14 +7,17 @@ import com.tictactoe.State;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ComputerMoveGenerator {
+public class ComputerMoveGenerator implements MoveGenerator {
 
-    public static Field generateMove(State state) {
+    public Field generateNextMove(State state) {
         int turn = state.getTurn();
         if(turn>2) {
             String[][] getMap = state.getMap();
             int getLengthOfLine = state.getLengthOfLine();
             BestOption best = checkByBlocks(getMap, getLengthOfLine);
+            if(best.sloatsLacking()>getLengthOfLine){
+                return randomMove(state);
+            }
             String[][] situation = getMap;
             String direction = best.direction();
             Field startField = best.fieldOfStart();
@@ -22,32 +25,36 @@ public class ComputerMoveGenerator {
                 case "column":
 //                    for (int i = 0; i < getLengthOfLine; i++) {
                     for (int i = getLengthOfLine-1; i >= 0; i--) {
-                        if (!situation[startField.y() + i][startField.x()].equals("o")) {
-                            return new Field(startField.y() + i, startField.x());
+                        Field field = new Field(startField.y() + i, startField.x());
+                        if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
+                            return new Field(field.y(), field.x());
                         }
                     }
                     break;
                 case "row":
 //                    for (int i = 0; i < getLengthOfLine; i++) {
                     for (int i = getLengthOfLine-1; i >= 0; i--) {
-                        if (!situation[startField.y()][startField.x() + i].equals("o")) {
-                            return new Field(startField.y(), startField.x() + i);
+                        Field field = new Field(startField.y(), startField.x() + i);
+                        if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
+                            return new Field(field.y(), field.x());
                         }
                     }
                     break;
                 case "diagonalRL":
 //                    for (int i = 0; i < getLengthOfLine; i++) {
-                        for (int i = getLengthOfLine-1; i >= 0; i--) {
-                        if (!situation[startField.y() + i][startField.x() - i].equals("o")) {
-                            return new Field(startField.y() + i, startField.x() - i);
+                   for (int i = getLengthOfLine-1; i >= 0; i--) {
+                        Field field = new Field(startField.y() + i, startField.x() - i);
+                        if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
+                            return new Field(field.y(), field.x());
                         }
                     }
                     break;
                 case "diagonalLR":
 //                    for (int i = 0; i < getLengthOfLine; i++) {
                     for (int i = getLengthOfLine-1; i >= 0; i--) {
-                        if (!situation[startField.y() + i][startField.x() + i].equals("o")) {
-                            return new Field(startField.y() + i, startField.x() + i);
+                        Field field = new Field(startField.y() + i, startField.x() + i);
+                        if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
+                            return new Field(field.y(), field.x());
                         }
                     }
                     break;
@@ -59,7 +66,7 @@ public class ComputerMoveGenerator {
     }
 
     private static BestOption checkByBlocks(String[][] globalSituation, int lengthOfTheLine) {
-        BestOption best = new BestOption(lengthOfTheLine+1, "column", new Field(-1,-1));
+        BestOption best = new BestOption(100, "column", new Field(-1,-1));
         int lengthOfTheBoard = globalSituation.length;
         int limit = lengthOfTheBoard-lengthOfTheLine;
 
@@ -168,13 +175,14 @@ public class ComputerMoveGenerator {
                 lacking--;
             }
         }
-        return new BestOption(lacking, "diagonalRL", new Field(initialPosition.y(), initialPosition.x()+localSituation.length-1));
+        return new BestOption(lacking, "diagonalRL",
+                new Field(initialPosition.y(), initialPosition.x()+localSituation.length-1));
     }
 
     public static Field randomMove(State state) {
         String[][] situation = state.getMap();
         Random random = new Random();
-        ArrayList<Field> fields = BoardHandler.buildFieldArray(situation);
+        ArrayList<Field> fields = BoardHandler.buildEmptyFieldsArray(situation);
         int select = random.nextInt(0, fields.size());
         return fields.get(select);
     }

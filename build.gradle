@@ -13,7 +13,7 @@ javafx {
 
 group = 'com.tictactoe'
 version = '1.0-SNAPSHOT'
-mainClassName = 'com.tictactoe.GUIInterface'
+mainClassName = 'com.tictactoe.GraphicalUI'
 
 repositories {
 	mavenCentral()

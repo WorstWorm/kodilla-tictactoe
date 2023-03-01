@@ -38,7 +38,7 @@ public class State extends Prototype<State> {
     }
 
     public void makeMove(Field field) {
-        if(BoardHandler.isFieldOccupied(this.getMap(), field)) {
+        if(BoardHandler.isFieldEmpty(this.getMap(), field)) {
             map[field.y()][field.x()] = activePlayer;
         }
     }
