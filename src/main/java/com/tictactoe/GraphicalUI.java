@@ -157,7 +157,7 @@ public class GraphicalUI extends Application {
         button.setFont(Font.font(MARKED_FIELD_FONT_SIZE));
         button.setText(state.getActivePlayer());
 
-        if(Logic.checkSequence(state)) {
+        if(WinChecker.checkSequence(state)) {
             label.setText(" " + state.getActivePlayer() + " won ");
             popup.getContent().add(label);
             popup.show(stage);

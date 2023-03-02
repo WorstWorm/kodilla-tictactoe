@@ -2,7 +2,7 @@ package com.tictactoe;
 
 import java.util.HashSet;
 
-public class Logic {
+public class WinChecker {
 
     private static boolean columnCheck(State state) {
         int length = state.getLengthOfLine();

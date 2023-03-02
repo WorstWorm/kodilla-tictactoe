@@ -61,7 +61,7 @@ public class ConsoleUI {
     }
 
     private static void checkEndConsoleProcedure() {
-        if (Logic.checkSequence(state)) {
+        if (WinChecker.checkSequence(state)) {
             System.out.println(state.getActivePlayer() + " won");
             ConsoleBoardGenerator.generateBoardInConsole(state.getMap());
             state.setEnd(true);

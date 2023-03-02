@@ -50,7 +50,7 @@ public class BoardHandler {
         return !fields.isEmpty();
     }
 
-        public static String getNrByField(State state, Field field) {
+    public static String getNrByField(State state, Field field) {
         int fieldNr = 0;
         for(int i=0; i<state.getSize(); i++) {
             for(int j=0; j< state.getSize(); j++) {
