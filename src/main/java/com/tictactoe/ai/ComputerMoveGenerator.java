@@ -23,7 +23,6 @@ public class ComputerMoveGenerator implements MoveGenerator {
             Field startField = best.fieldOfStart();
             switch (direction) {
                 case "column":
-//                    for (int i = 0; i < getLengthOfLine; i++) {
                     for (int i = getLengthOfLine-1; i >= 0; i--) {
                         Field field = new Field(startField.y() + i, startField.x());
                         if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
@@ -32,7 +31,6 @@ public class ComputerMoveGenerator implements MoveGenerator {
                     }
                     break;
                 case "row":
-//                    for (int i = 0; i < getLengthOfLine; i++) {
                     for (int i = getLengthOfLine-1; i >= 0; i--) {
                         Field field = new Field(startField.y(), startField.x() + i);
                         if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
@@ -41,7 +39,6 @@ public class ComputerMoveGenerator implements MoveGenerator {
                     }
                     break;
                 case "diagonalRL":
-//                    for (int i = 0; i < getLengthOfLine; i++) {
                    for (int i = getLengthOfLine-1; i >= 0; i--) {
                         Field field = new Field(startField.y() + i, startField.x() - i);
                         if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {
@@ -50,7 +47,6 @@ public class ComputerMoveGenerator implements MoveGenerator {
                     }
                     break;
                 case "diagonalLR":
-//                    for (int i = 0; i < getLengthOfLine; i++) {
                     for (int i = getLengthOfLine-1; i >= 0; i--) {
                         Field field = new Field(startField.y() + i, startField.x() + i);
                         if (BoardHandler.isFieldEmpty(getMap, field) && BoardHandler.isItOnBoardRange(getMap, field)) {

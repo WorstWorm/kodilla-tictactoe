@@ -14,7 +14,7 @@ import static com.tictactoe.GUIConstants.*;
 
 public class GraphicalUI extends Application {
     private State state = new State(3,3, false);
-    private MovementMemory memory  = new MovementMemory();
+    private final MovementMemory memory  = new MovementMemory();
     Button[][] buttons = new Button[3][3];
     MoveGenerator moveGenerator = new ComputerMoveGenerator();
 

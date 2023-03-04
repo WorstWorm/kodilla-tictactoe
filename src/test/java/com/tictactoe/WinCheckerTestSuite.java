@@ -2,15 +2,15 @@ package com.tictactoe;
 
 import org.junit.jupiter.api.*;
 
-public class StateTestSuite {
+public class WinCheckerTestSuite {
 
     @Nested
-    @DisplayName("o winning sequences on rows tests")
+    @DisplayName("test group - player o winning sequences on rows")
     class oWinOnRows {
 
         @Test
-        @DisplayName("o winning sequence on first row (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_RowFirst() {
+        @DisplayName("- test - o winning sequence on first row (board 3x3, line 3)")
+        void test_OWinOnFirstRow_Board3Line3() {
             //Given
                 State state = new State(3);
                 state.setLengthOfLine(3);
@@ -30,8 +30,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on middle row (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_RowMiddle() {
+        @DisplayName("- test - o winning sequence on second row (board 3x3, line 3)")
+        void test_OWinOnSecondRow_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -51,8 +51,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on last row (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_RowLast() {
+        @DisplayName("- test - o winning sequence on last row (board 3x3, line 3)")
+        void test_OWinOnThirdRow_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -72,8 +72,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on first row (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_RowFirst() {
+        @DisplayName("- test - o winning sequence on first row (board 10x10, line 5)")
+        void test_OWinOnFirstRow_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -95,8 +95,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on middle row (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_RowMiddle() {
+        @DisplayName("- test - o winning sequence on middle row (board 10x10, line 5)")
+        void test_OWinOnMiddleRow_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -118,8 +118,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on last row (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_RowLast() {
+        @DisplayName("- test - o winning sequence on last row (board 10x10, line 5)")
+        void test_OWinOnLastRow_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -143,12 +143,12 @@ public class StateTestSuite {
 
 
     @Nested
-    @DisplayName("o winning sequences on columns tests")
+    @DisplayName("test group - player o winning sequences on columns")
     class oWinOnColumns {
 
         @Test
-        @DisplayName("o winning sequence on first column (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_ColumnFirst() {
+        @DisplayName("- test - o winning sequence on first column (board 3x3, line 3)")
+        void test_OWinOnFirstColumn_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -168,8 +168,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on middle column (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_ColumnMiddle() {
+        @DisplayName("- test - o winning sequence on second column (board 3x3, line 3)")
+        void test_OWinOnSecondColumn_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -189,8 +189,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on last column (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_ColumnLast() {
+        @DisplayName("- test - o winning sequence on last column (board 3x3, line 3)")
+        void test_OWinOnThirdColumn_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -210,8 +210,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on first column (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_ColumnFirst() {
+        @DisplayName("- test - o winning sequence on first column (board 10x10, line 5)")
+        void test_OWinOnFirstColumn_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -233,8 +233,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on middle column (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_ColumnMiddle() {
+        @DisplayName("- test - o winning sequence on middle column (board 10x10, line 5)")
+        void test_OWinOnMiddleColumn_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -256,8 +256,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on last column (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_ColumnLast() {
+        @DisplayName("- test - o winning sequence on last column (board 10x10, line 5)")
+        void test_OWinOnLastColumn_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -281,12 +281,12 @@ public class StateTestSuite {
 
 
     @Nested
-    @DisplayName("o winning sequences on diagonals")
+    @DisplayName("test group - player o winning sequences on diagonals")
     class oWinOnDiagonals {
 
         @Test
-        @DisplayName("o winning sequence on diagonal left-right (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_DiagonalLeftRight() {
+        @DisplayName("- test - o winning sequence on diagonal left-right (board 3x3, line 3)")
+        void test_OWinOnDiagonalLR_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -306,8 +306,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on diagonal right-left (borad 3x3, line 3)")
-        void test_WinOnRowsO_Line3_Board3_DiagonalRightLeft() {
+        @DisplayName("- test - o winning sequence on diagonal right-left (board 3x3, line 3)")
+        void test_OWinOnDiagonalRL_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -327,8 +327,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on diagonal left-right (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_RandomDiagonalLeftRight() {
+        @DisplayName("- test - o winning sequence on random diagonal left-right (board 10x10, line 5)")
+        void test_OWinOnRandomDiagonalLR_Board3Line3() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -350,8 +350,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("o winning sequence on diagonal right-left (borad 10x10, line 5)")
-        void test_WinOnRowsO_Line5_Board10_RandomDiagonalRightLeft() {
+        @DisplayName("- test - o winning sequence on random diagonal right-left (board 10x10, line 5)")
+        void test_OWinOnRandomDiagonalRL_Board3Line3() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -375,12 +375,12 @@ public class StateTestSuite {
 
 
     @Nested
-    @DisplayName("x winning sequences on rows tests")
+    @DisplayName("test group - player x winning sequences on rows")
     class xWinOnRows {
 
         @Test
-        @DisplayName("x winning sequence on first row (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_RowFirst() {
+        @DisplayName("- test - x winning sequence on first row (board 3x3, line 3)")
+        void test_XWinOnFirstRow_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -399,8 +399,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on middle row (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_RowMiddle() {
+        @DisplayName("- test - x winning sequence on second row (board 3x3, line 3)")
+        void test_XWinOnSecondRow_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -419,8 +419,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on last row (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_RowLast() {
+        @DisplayName("- test - x winning sequence on last row (board 3x3, line 3)")
+        void test_XWinOnThirdRow_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -439,8 +439,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on first row (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_RowFirst() {
+        @DisplayName("- test - x winning sequence on first row (board 10x10, line 5)")
+        void test_XWinOnFirstRow_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -461,8 +461,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on middle row (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_RowMiddle() {
+        @DisplayName("- test - x winning sequence on middle row (board 10x10, line 5)")
+        void test_XWinOnMiddleRow_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -483,8 +483,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on last row (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_RowLast() {
+        @DisplayName("- test - x winning sequence on last row (board 10x10, line 5)")
+        void test_XWinOnLastRow_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -507,12 +507,12 @@ public class StateTestSuite {
 
 
     @Nested
-    @DisplayName("x winning sequences on columns tests")
+    @DisplayName("test group - player x winning sequences on columns")
     class xWinOnColumns {
 
         @Test
-        @DisplayName("x winning sequence on first column (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_ColumnFirst() {
+        @DisplayName("- test - x winning sequence on first column (board 3x3, line 3)")
+        void test_XWinOnFirstColumn_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -531,8 +531,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on middle column (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_ColumnMiddle() {
+        @DisplayName("- test - x winning sequence on second column (board 3x3, line 3)")
+        void test_XWinOnSecondColumn_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -551,8 +551,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on last column (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_ColumnLast() {
+        @DisplayName("- test - x winning sequence on last column (board 3x3, line 3)")
+        void test_XWinOnThirdColumn_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -571,8 +571,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on first column (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_ColumnFirst() {
+        @DisplayName("- test - x winning sequence on first column (board 10x10, line 5)")
+        void test_XWinOnFirstColumn_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -593,8 +593,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on middle column (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_ColumnMiddle() {
+        @DisplayName("- test - x winning sequence on middle column (board 10x10, line 5)")
+        void test_XWinOnMiddleColumn_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -615,8 +615,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on last column (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_ColumnLast() {
+        @DisplayName("- test - x winning sequence on last column (board 10x10, line 5)")
+        void test_XWinOnLastColumn_Board10Line5() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -639,12 +639,12 @@ public class StateTestSuite {
 
 
     @Nested
-    @DisplayName("x winning sequences on diagonals")
+    @DisplayName("test group - player x winning sequences on diagonals")
     class xWinOnDiagonals {
 
         @Test
-        @DisplayName("x winning sequence on diagonal left-right (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_DiagonalLeftRight() {
+        @DisplayName("- test - x winning sequence on diagonal left-right (board 3x3, line 3)")
+        void test_XWinOnDiagonalLR_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -663,8 +663,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on diagonal right-left (borad 3x3, line 3)")
-        void test_WinOnRowsX_Line3_Board3_DiagonalRightLeft() {
+        @DisplayName("- test - x winning sequence on diagonal right-left (board 3x3, line 3)")
+        void test_XWinOnDiagonalRL_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -683,8 +683,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on diagonal left-right (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_RandomDiagonalLeftRight() {
+        @DisplayName("- test - x winning sequence on random diagonal left-right (board 10x10, line 5)")
+        void test_XWinOnRandomDiagonalLR_Board3Line3() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -705,8 +705,8 @@ public class StateTestSuite {
         }
 
         @Test
-        @DisplayName("x winning sequence on diagonal right-left (borad 10x10, line 5)")
-        void test_WinOnRowsX_Line5_Board10_RandomDiagonalRightLeft() {
+        @DisplayName("- test x winning sequence on random diagonal right-left (board 10x10, line 5)")
+        void test_XWinOnRandomDiagonalRL_Board3Line3() {
             //Given
             State state = new State(10);
             state.setLengthOfLine(5);
@@ -728,52 +728,12 @@ public class StateTestSuite {
     }
 
     @Nested
-    @DisplayName("other tests")
+    @DisplayName("test group - other tests")
     class otherTests {
 
         @Test
-        @DisplayName("draw situation (borad 3x3)")
-        void test_Draw_Board3() {
-            //Given
-            State state = new State(3);
-
-            //When
-            state.makeMove(new Field(0,0));
-            state.makeMove(new Field(0,1));
-            state.makeMove(new Field(0,2));
-            state.makeMove(new Field(1,0));
-            state.makeMove(new Field(1,1));
-            state.makeMove(new Field(1,2));
-            state.makeMove(new Field(2,0));
-            state.makeMove(new Field(2,1));
-            state.makeMove(new Field(2,2));
-            boolean result = BoardHandler.doesEmptyFieldExists(state.getMap());
-
-            //Then
-            Assertions.assertFalse(result);
-        }
-
-        @Test
-        @DisplayName("draw situation (board 10x10)")
-        void test_Draw_Board10() {
-            //Given
-            State state = new State(10);
-
-            //When
-            for(int i=0; i<10; i++){
-                for(int j=0; j<10; j++){
-                    state.makeMove(new Field(i,j));
-                }
-            }
-            boolean result = BoardHandler.doesEmptyFieldExists(state.getMap());
-
-            //Then
-            Assertions.assertFalse(result);
-        }
-
-        @Test
-        @DisplayName("false sequence test")
-        void test_falseSequence() {
+        @DisplayName("- test - no sequence (board 3x3, line 3)")
+        void test_noSequence_Board3Line3() {
             //Given
             State state = new State(3);
             state.setLengthOfLine(3);
@@ -783,6 +743,24 @@ public class StateTestSuite {
             state.makeMove(new Field(0,0));
             state.makeMove(new Field(1,0));
             state.makeMove(new Field(0,2));
+            boolean result = WinChecker.checkSequence(state);
+
+            //Then
+            Assertions.assertFalse(result);
+        }
+
+        @Test
+        @DisplayName("- test - no sequence (board 10x10, line 5)")
+        void test_noSequence_Board10Line5() {
+            //Given
+            State state = new State(10);
+            state.setLengthOfLine(5);
+
+            //When
+            state.makeMove(new Field(0,0));
+            state.makeMove(new Field(1,1));
+            state.makeMove(new Field(2,2));
+            state.makeMove(new Field(4,4));
             boolean result = WinChecker.checkSequence(state);
 
             //Then
